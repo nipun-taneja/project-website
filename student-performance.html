@@ -101,6 +101,11 @@
         <div class="flex-1 overflow-y-auto py-2">
             <div class="px-4 py-2 text-xs font-bold text-stone-400 uppercase tracking-wider">Report Sections</div>
             
+            <!-- NEW: Full Report View Button -->
+            <button onclick="viewFullReport()" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-50 transition-colors flex items-center gap-3 mb-2" id="nav-full-report">
+                <span class="text-stone-400">📄</span> <span class="text-sm">View Full Report</span>
+            </button>
+
             <button onclick="navigateTo('summary')" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-50 transition-colors flex items-center gap-3 active" id="nav-summary">
                 <span class="text-stone-400">1.</span> <span class="text-sm">Executive Summary</span>
             </button>
@@ -672,6 +677,34 @@
             if(id === 'dataviz') renderVizCharts();
             if(id === 'results') renderResultCharts();
             if(id === 'simulation') runSimulation();
+        }
+
+        // --- NEW: FULL REPORT VIEW LOGIC ---
+        function viewFullReport() {
+            // Update Sidebar State
+            document.querySelectorAll('.nav-item').forEach(el => {
+                el.classList.remove('active', 'text-slate-900', 'font-bold');
+                el.classList.add('text-stone-500');
+            });
+            const btn = document.getElementById('nav-full-report');
+            if(btn) {
+                btn.classList.remove('text-stone-500');
+                btn.classList.add('active', 'text-slate-900', 'font-bold');
+            }
+
+            // Show ALL Sections
+            document.querySelectorAll('section').forEach(sec => {
+                sec.classList.remove('hidden');
+                sec.classList.add('fade-in');
+            });
+
+            // Scroll to Top
+            document.getElementById('main-scroll').scrollTo(0,0);
+
+            // Trigger Charts (since they are now visible)
+            renderVizCharts();
+            renderResultCharts();
+            runSimulation();
         }
 
         // --- RESULTS VIEW TOGGLE ---
