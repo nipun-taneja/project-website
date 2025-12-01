@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #1a1a2e;
+            background: #0f0f1e;
+            overflow-x: hidden;
+        }
+
+        /* Animated gradient background */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(45deg, #0f0f1e, #16213e, #1a1a2e);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Floating particles */
+        .particle {
+            position: fixed;
+            width: 3px;
+            height: 3px;
+            background: rgba(139, 92, 246, 0.5);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0) translateX(0); opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { transform: translateY(-100vh) translateX(50px); opacity: 0; }
+        }
+
+        header {
+            position: relative;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(236, 72, 153, 0.1) 100%);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(139, 92, 246, 0.2);
+            padding: 6rem 2rem 4rem;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 0%, rgba(139, 92, 246, 0.15), transparent 70%);
+        }
+
+        header h1 {
+            position: relative;
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #8b5cf6, #ec4899, #8b5cf6);
+            background-size: 200% 200%;
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientText 5s ease infinite;
+        }
+
+        @keyframes gradientText {
+            0%, 100% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+        }
+
+        header p {
+            position: relative;
+            font-size: 1.3rem;
+            color: #a78bfa;
+            font-weight: 300;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 2rem 0 3rem;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%;
+            height: 4px;
+            background: linear-gradient(90deg, transparent, #8b5cf6, #ec4899, transparent);
+            border-radius: 2px;
+        }
+
+        /* Grid layout for portfolio items */
+        .portfolio-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        /* Project card styling with glassmorphism */
+        .project-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 20px;
+            overflow: hidden;
+            border: 1px solid rgba(139, 92, 246, 0.2);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+        }
+
+        .project-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            pointer-events: none;
+        }
+
+        .project-card:hover {
+            transform: translateY(-12px) scale(1.02);
+            border-color: rgba(139, 92, 246, 0.5);
+            box-shadow: 0 20px 60px rgba(139, 92, 246, 0.3), 0 0 40px rgba(236, 72, 153, 0.2);
+        }
+
+        .project-card:hover::before {
+            opacity: 1;
+        }
+
+        .project-card .image-wrapper {
+            position: relative;
+            overflow: hidden;
+            height: 220px;
+        }
+
+        .project-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .project-card:hover img {
+            transform: scale(1.1);
+        }
+
+        .project-card .image-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(180deg, transparent 0%, rgba(15, 15, 30, 0.8) 100%);
+        }
+
+        .project-card .content {
+            padding: 2rem;
+            position: relative;
+        }
+
+        .project-card h3 {
+            font-size: 1.6rem;
+            margin-bottom: 0.8rem;
+            color: #ffffff;
+            font-weight: 700;
+        }
+
+        .project-card p {
+            color: #a78bfa;
+            margin-bottom: 1.5rem;
+            line-height: 1.7;
+        }
+
+        .project-card .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-card .tag {
+            background: rgba(139, 92, 246, 0.15);
+            backdrop-filter: blur(10px);
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            color: #c4b5fd;
+            border: 1px solid rgba(139, 92, 246, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover .tag {
+            background: rgba(139, 92, 246, 0.25);
+            border-color: rgba(139, 92, 246, 0.5);
+        }
+
+        .project-card .links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .project-card .btn {
+            flex: 1;
+            padding: 0.8rem 1.5rem;
+            background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 1px solid rgba(139, 92, 246, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .project-card .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .project-card .btn:hover::before {
+            left: 100%;
+        }
+
+        .project-card .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
+        }
+
+        .project-card .btn-secondary {
+            background: linear-gradient(135deg, #ec4899, #db2777);
+            border-color: rgba(236, 72, 153, 0.5);
+        }
+
+        .project-card .btn-secondary:hover {
+            box-shadow: 0 10px 25px rgba(236, 72, 153, 0.4);
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.02);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(139, 92, 246, 0.2);
+            color: #a78bfa;
+            text-align: center;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        footer p {
+            margin: 0.5rem 0;
+        }
+
+        /* Instructions box */
+        .instructions {
+            background: rgba(236, 201, 75, 0.1);
+            backdrop-filter: blur(20px);
+            border: 2px dashed rgba(236, 201, 75, 0.4);
+            padding: 2rem;
+            margin: 3rem 0;
+            border-radius: 16px;
+        }
+
+        .instructions h3 {
+            color: #fbbf24;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        .instructions p {
+            color: #fde68a;
+            margin-bottom: 1rem;
+        }
+
+        .instructions code {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            color: #fbbf24;
+        }
+
+        .instructions pre {
+            background: rgba(0, 0, 0, 0.4);
+            padding: 1.5rem;
+            border-radius: 10px;
+            overflow-x: auto;
+            margin-top: 1rem;
+            border: 1px solid rgba(236, 201, 75, 0.2);
+            color: #fde68a;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2.5rem;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .portfolio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-animation"></div>
+    
+    <!-- Floating particles -->
+    <div class="particle" style="left: 10%; animation-delay: 0s;"></div>
+    <div class="particle" style="left: 20%; animation-delay: 2s;"></div>
+    <div class="particle" style="left: 30%; animation-delay: 4s;"></div>
+    <div class="particle" style="left: 40%; animation-delay: 1s;"></div>
+    <div class="particle" style="left: 50%; animation-delay: 3s;"></div>
+    <div class="particle" style="left: 60%; animation-delay: 5s;"></div>
+    <div class="particle" style="left: 70%; animation-delay: 2.5s;"></div>
+    <div class="particle" style="left: 80%; animation-delay: 4.5s;"></div>
+    <div class="particle" style="left: 90%; animation-delay: 1.5s;"></div>
+
+    <header>
+        <h1>Your Name</h1>
+        <p>Web Developer • Designer • Creator</p>
+    </header>
+
+    <div class="container">
+        <h2 class="section-title">My Portfolio</h2>
+
+        <!-- ============================================ -->
+        <!-- PASTE YOUR PROJECT CARDS BELOW THIS LINE -->
+        <!-- ============================================ -->
+        
+        <div class="portfolio-grid">
+            
+            <!-- Example Project 1 -->
+            <div class="project-card">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=400&h=200&fit=crop" alt="Project 1">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="content">
+                    <h3>E-Commerce Platform</h3>
+                    <p>A full-featured online store with cart functionality and payment integration.</p>
+                    <div class="tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">MongoDB</span>
+                    </div>
+                    <div class="links">
+                        <a href="#" class="btn">Live Demo</a>
+                        <a href="#" class="btn btn-secondary">Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example Project 2 -->
+            <div class="project-card">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1551650975-87deedd944c3?w=400&h=200&fit=crop" alt="Project 2">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="content">
+                    <h3>Weather Dashboard</h3>
+                    <p>Real-time weather app with forecasts and location-based data visualization.</p>
+                    <div class="tags">
+                        <span class="tag">JavaScript</span>
+                        <span class="tag">API</span>
+                        <span class="tag">Chart.js</span>
+                    </div>
+                    <div class="links">
+                        <a href="#" class="btn">Live Demo</a>
+                        <a href="#" class="btn btn-secondary">Code</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Example Project 3 -->
+            <div class="project-card">
+                <div class="image-wrapper">
+                    <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=400&h=200&fit=crop" alt="Project 3">
+                    <div class="image-overlay"></div>
+                </div>
+                <div class="content">
+                    <h3>Task Manager</h3>
+                    <p>Productivity app for organizing tasks with drag-and-drop functionality.</p>
+                    <div class="tags">
+                        <span class="tag">Vue.js</span>
+                        <span class="tag">Firebase</span>
+                        <span class="tag">CSS3</span>
+                    </div>
+                    <div class="links">
+                        <a href="#" class="btn">Live Demo</a>
+                        <a href="#" class="btn btn-secondary">Code</a>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ============================================ -->
+        <!-- PASTE YOUR PROJECT CARDS ABOVE THIS LINE -->
+        <!-- ============================================ -->
+
+        <div class="instructions">
+            <h3>📝 How to Add New Projects</h3>
+            <p><strong>Simply copy the block below and paste it inside the <code>&lt;div class="portfolio-grid"&gt;</code> section above:</strong></p>
+            <pre>&lt;div class="project-card"&gt;
+    &lt;div class="image-wrapper"&gt;
+        &lt;img src="YOUR_IMAGE_URL" alt="Project Name"&gt;
+        &lt;div class="image-overlay"&gt;&lt;/div&gt;
+    &lt;/div&gt;
+    &lt;div class="content"&gt;
+        &lt;h3&gt;Project Title&lt;/h3&gt;
+        &lt;p&gt;Brief description of your project.&lt;/p&gt;
+        &lt;div class="tags"&gt;
+            &lt;span class="tag"&gt;Technology 1&lt;/span&gt;
+            &lt;span class="tag"&gt;Technology 2&lt;/span&gt;
+            &lt;span class="tag"&gt;Technology 3&lt;/span&gt;
+        &lt;/div&gt;
+        &lt;div class="links"&gt;
+            &lt;a href="DEMO_URL" class="btn"&gt;Live Demo&lt;/a&gt;
+            &lt;a href="CODE_URL" class="btn btn-secondary"&gt;Code&lt;/a&gt;
+        &lt;/div&gt;
+    &lt;/div&gt;
+&lt;/div&gt;</pre>
+            <p style="margin-top: 1rem;"><strong>Tip:</strong> You can remove this instructions box from the final version!</p>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Your Name. All rights reserved.</p>
+        <p>Contact: your.email@example.com</p>
+    </footer>
+</body>
+</html>
