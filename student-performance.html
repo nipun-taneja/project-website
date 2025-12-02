@@ -10,14 +10,6 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     
     <!-- Chosen Palette: Warm Neutrals & Deep Slate (Academic Theme) -->
-    <!-- 
-         Background: bg-stone-50
-         Text: text-stone-800
-         Primary: text-slate-800 / bg-slate-800
-         Accent: text-teal-700 / bg-teal-600
-         Highlight: text-indigo-600
-    -->
-
     <style>
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f5f5f4; }
@@ -42,7 +34,6 @@
             font-weight: 700;
         }
 
-        /* Table Styling for Rubric #6 */
         .academic-table {
             width: 100%;
             border-collapse: collapse;
@@ -60,6 +51,7 @@
             padding: 10px 12px;
             border-bottom: 1px solid #e2e8f0;
             color: #475569;
+            vertical-align: top;
         }
         .academic-table tr:last-child td { border-bottom: none; }
         .academic-table tr:hover { background-color: #f1f5f9; }
@@ -107,7 +99,6 @@
         <div class="flex-1 overflow-y-auto py-2">
             <div class="px-4 py-2 text-xs font-bold text-stone-400 uppercase tracking-wider">Report Sections</div>
             
-            <!-- Full Report View Button -->
             <button onclick="viewFullReport()" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-50 transition-colors flex items-center gap-3 mb-2" id="nav-full-report">
                 <span class="text-stone-400">📄</span> <span class="text-sm">View Full Report</span>
             </button>
@@ -130,21 +121,24 @@
             <button onclick="navigateTo('deepdive')" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-50 transition-colors flex items-center gap-3" id="nav-deepdive">
                 <span class="text-stone-400">6.</span> <span class="text-sm font-semibold text-indigo-700">Model Deep Dive</span>
             </button>
+            <button onclick="navigateTo('matrix')" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-50 transition-colors flex items-center gap-3" id="nav-matrix">
+                <span class="text-stone-400">7.</span> <span class="text-sm font-semibold text-teal-700">Model Comparison</span>
+            </button>
             <button onclick="navigateTo('results')" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-50 transition-colors flex items-center gap-3" id="nav-results">
-                <span class="text-stone-400">7.</span> <span class="text-sm">Results & Analysis</span>
+                <span class="text-stone-400">8.</span> <span class="text-sm">Results & Analysis</span>
             </button>
             <button onclick="navigateTo('conclusions')" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-50 transition-colors flex items-center gap-3" id="nav-conclusions">
-                <span class="text-stone-400">8.</span> <span class="text-sm">Conclusion & Future</span>
+                <span class="text-stone-400">9.</span> <span class="text-sm">Conclusion & Future</span>
             </button>
             
             <div class="px-4 py-2 mt-4 text-xs font-bold text-stone-400 uppercase tracking-wider">Interactive Lab</div>
             <button onclick="navigateTo('simulation')" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-50 transition-colors flex items-center gap-3" id="nav-simulation">
-                <span class="text-stone-400">9.</span> <span class="text-sm font-semibold text-teal-700">Grade Simulator</span>
+                <span class="text-stone-400">10.</span> <span class="text-sm font-semibold text-teal-700">Grade Simulator</span>
             </button>
             
             <div class="px-4 py-2 mt-4 text-xs font-bold text-stone-400 uppercase tracking-wider">Appendix</div>
              <button onclick="navigateTo('appendix')" class="nav-item w-full text-left px-6 py-3 hover:bg-stone-50 transition-colors flex items-center gap-3" id="nav-appendix">
-                <span class="text-stone-400">10.</span> <span class="text-sm">Code Appendix</span>
+                <span class="text-stone-400">11.</span> <span class="text-sm">Code Appendix</span>
             </button>
         </div>
     </nav>
@@ -164,14 +158,15 @@
                         Academic success is a complex outcome driven by academic history, socio-demographics, and behavior. This report investigates the <strong>UCI Student Performance Dataset</strong> (Portuguese & Math courses) to identify key performance drivers and build robust predictive models.
                     </p>
                     
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-                        <div class="bg-stone-50 p-4 rounded-lg border border-stone-100">
-                            <h4 class="font-bold text-slate-700 text-sm uppercase mb-2">Methods</h4>
-                            <p class="text-sm text-stone-600">Comprehensive EDA followed by a rigorous <strong>20x10 Cross-Validation</strong> modeling phase. Models included Linear Regression, Random Forests, SVR, and Neural Networks.</p>
-                        </div>
-                        <div class="bg-stone-50 p-4 rounded-lg border border-stone-100">
-                            <h4 class="font-bold text-teal-700 text-sm uppercase mb-2">Key Findings</h4>
-                            <p class="text-sm text-stone-600"><strong>Academic history (G1/G2)</strong> is the dominant predictor. Behavioral factors (study time, motivation) play a secondary role. <strong>Random Forests</strong> and Regularized Linear models proved most stable.</p>
+                    <div class="grid grid-cols-1 gap-4 mt-4">
+                        <div class="bg-teal-50 p-5 rounded-lg border border-teal-100">
+                            <h4 class="font-bold text-teal-800 text-sm uppercase mb-3">Key Findings (ISLP Report)</h4>
+                            <ul class="list-disc list-inside text-sm text-teal-900 space-y-2">
+                                <li><strong>Dominance of History:</strong> Prior academic performance (G1, G2) is the most reliable predictor of student outcomes.</li>
+                                <li><strong>Linear vs. Nonlinear:</strong> Linear models outperform nonlinear models when strong linear signals (like G1/G2) exist.</li>
+                                <li><strong>Role of Nonlinearity:</strong> Nonlinear models (RF, DT) only gain an advantage when academic predictors are removed or weakened (Setup A).</li>
+                                <li><strong>Demographics are Secondary:</strong> No behavioral or demographic variable comes close to replacing the predictive power of past grades.</li>
+                            </ul>
                         </div>
                     </div>
                 </div>
@@ -188,7 +183,7 @@
                         Understanding the factors that shape student academic success is essential for designing effective educational strategies and early-intervention systems. Student performance does not arise from a single cause; instead, it reflects the joint influence of academic history, socio-demographic conditions, parental background, behavioral patterns, and psychological or motivational variables.
                     </p>
                     <div class="bg-white p-6 rounded-lg border-l-4 border-teal-500 shadow-sm">
-                        <h3 class="font-bold text-slate-800 mb-2">Goals of Analysis</h3>
+                        <h3 class="font-bold text-slate-800 mb-2">Project Goals</h3>
                         <ul class="list-disc list-inside space-y-1 text-stone-600">
                             <li>Identify key drivers of final academic performance (G3).</li>
                             <li>Build predictive models to estimate final grades in Portuguese and Math.</li>
@@ -364,38 +359,6 @@
                         </p>
                     </div>
 
-                    <!-- Models Grid -->
-                    <div>
-                        <h3 class="text-xl font-bold text-slate-800 mb-4">Models Evaluated</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                            <!-- Model Cards -->
-                            <div class="bg-white p-4 rounded-lg border border-stone-200 shadow-sm hover:border-teal-400 transition-colors">
-                                <h4 class="font-bold text-slate-700">Linear Regression</h4>
-                                <p class="text-xs text-stone-500 mt-1">Baseline model. Interpretability is high, but it fails to capture nonlinear relationships.</p>
-                            </div>
-                            <div class="bg-white p-4 rounded-lg border border-stone-200 shadow-sm hover:border-teal-400 transition-colors">
-                                <h4 class="font-bold text-slate-700">Ridge & Lasso</h4>
-                                <p class="text-xs text-stone-500 mt-1">Regularized linear models (L2/L1). Crucial for handling multicollinearity between features like G1/G2 and parental education.</p>
-                            </div>
-                            <div class="bg-white p-4 rounded-lg border border-stone-200 shadow-sm hover:border-teal-400 transition-colors">
-                                <h4 class="font-bold text-slate-700">Random Forests</h4>
-                                <p class="text-xs text-stone-500 mt-1">Ensemble of decision trees. Captures nonlinearities and interactions naturally. Highly robust against overfitting.</p>
-                            </div>
-                            <div class="bg-white p-4 rounded-lg border border-stone-200 shadow-sm hover:border-teal-400 transition-colors">
-                                <h4 class="font-bold text-slate-700">Support Vector Regression (SVR)</h4>
-                                <p class="text-xs text-stone-500 mt-1">Uses RBF kernel to map data to high dimensions. Powerful for complex boundaries but sensitive to scaling.</p>
-                            </div>
-                            <div class="bg-white p-4 rounded-lg border border-stone-200 shadow-sm hover:border-teal-400 transition-colors">
-                                <h4 class="font-bold text-slate-700">Neural Networks (MLP)</h4>
-                                <p class="text-xs text-stone-500 mt-1">Single-hidden-layer perceptron. Learns complex representations but requires careful hyperparameter tuning.</p>
-                            </div>
-                            <div class="bg-white p-4 rounded-lg border border-stone-200 shadow-sm hover:border-teal-400 transition-colors">
-                                <h4 class="font-bold text-slate-700">K-Nearest Neighbors (KNN)</h4>
-                                <p class="text-xs text-stone-500 mt-1">Distance-based prediction. Simple, but suffers in high-dimensional spaces (curse of dimensionality).</p>
-                            </div>
-                        </div>
-                    </div>
-
                     <!-- Setups -->
                     <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6">
                         <h3 class="text-lg font-bold text-slate-800 mb-4">Experimental Configurations</h3>
@@ -417,7 +380,7 @@
                 </div>
             </section>
 
-            <!-- 6. MODEL DEEP DIVE (New Section) -->
+            <!-- 6. MODEL DEEP DIVE (Chart Section) -->
             <section id="deepdive" class="fade-in hidden">
                 <div class="border-l-4 border-indigo-600 pl-4 mb-6">
                     <h2 class="text-3xl font-bold text-slate-800">6. Detailed Model Analysis</h2>
@@ -436,6 +399,10 @@
                         <button onclick="renderDeepDiveChart('lasso')" class="btn-model-select px-3 py-2 text-sm font-medium border border-stone-300 rounded hover:bg-stone-100 transition-colors" data-model="lasso">Lasso</button>
                         <button onclick="renderDeepDiveChart('elastic')" class="btn-model-select px-3 py-2 text-sm font-medium border border-stone-300 rounded hover:bg-stone-100 transition-colors" data-model="elastic">ElasticNet</button>
                         <button onclick="renderDeepDiveChart('knn')" class="btn-model-select px-3 py-2 text-sm font-medium border border-stone-300 rounded hover:bg-stone-100 transition-colors" data-model="knn">KNN</button>
+                        <button onclick="renderDeepDiveChart('dt')" class="btn-model-select px-3 py-2 text-sm font-medium border border-stone-300 rounded hover:bg-stone-100 transition-colors" data-model="dt">Decision Tree</button>
+                        <button onclick="renderDeepDiveChart('rf')" class="btn-model-select px-3 py-2 text-sm font-medium border border-stone-300 rounded hover:bg-stone-100 transition-colors" data-model="rf">Random Forest</button>
+                        <button onclick="renderDeepDiveChart('nn')" class="btn-model-select px-3 py-2 text-sm font-medium border border-stone-300 rounded hover:bg-stone-100 transition-colors" data-model="nn">Neural Network</button>
+                        <button onclick="renderDeepDiveChart('svm')" class="btn-model-select px-3 py-2 text-sm font-medium border border-stone-300 rounded hover:bg-stone-100 transition-colors" data-model="svm">SVR</button>
                     </div>
 
                     <!-- Chart Container -->
@@ -455,141 +422,154 @@
                 </div>
             </section>
 
-            <!-- 7. RESULTS -->
-            <section id="results" class="fade-in hidden">
-                <div class="border-l-4 border-slate-600 pl-4 mb-6">
-                    <h2 class="text-3xl font-bold text-slate-800">7. Results & Analysis</h2>
+            <!-- 7. MODEL COMPARISON MATRIX (New Dedicated Section) -->
+            <section id="matrix" class="fade-in hidden">
+                <div class="border-l-4 border-teal-600 pl-4 mb-6">
+                    <h2 class="text-3xl font-bold text-slate-800">7. Model Comparison Matrix</h2>
                 </div>
                 
-                <div class="flex justify-end mb-4">
-                    <div class="inline-flex rounded-md shadow-sm" role="group">
-                        <button onclick="toggleResults('chart')" id="btn-chart" class="px-4 py-2 text-sm font-medium text-white bg-slate-700 rounded-l-lg hover:bg-slate-800">Chart View</button>
-                        <button onclick="toggleResults('table')" id="btn-table" class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-200 rounded-r-lg hover:bg-slate-50">Table View</button>
+                <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 space-y-6">
+                    <div class="overflow-x-auto">
+                        <table class="academic-table text-left">
+                            <thead>
+                                <tr>
+                                    <th class="w-1/6">Model</th>
+                                    <th class="w-2/6">How It Works</th>
+                                    <th class="w-1.5/6">Advantages</th>
+                                    <th class="w-1.5/6">Disadvantages</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-sm">
+                                <tr>
+                                    <td class="font-bold">Linear Regression (LR)</td>
+                                    <td>Fits a straight-line relationship between features and the final grade. Works extremely well when prior grades (G1, G2) are present because they strongly predict G3.</td>
+                                    <td class="text-teal-700">Very interpretable; strong performance in Setup C where G1 and G2 dominate; good baseline for comparison.</td>
+                                    <td class="text-rose-700">Performs poorly in Setup A because behavioral and social variables do not follow simple linear patterns; highly sensitive to correlated features.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Ridge Regression (L2)</td>
+                                    <td>Adds penalty to stabilize coefficients and reduce noise from large numbers of dummy variables.</td>
+                                    <td class="text-teal-700">More stable than LR; reduces overfitting; improves accuracy in setups with many weak predictors (Setup A).</td>
+                                    <td class="text-rose-700">Still limited in capturing complex relationships; small improvement over LR when strong predictors are present.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Lasso Regression (L1)</td>
+                                    <td>Shrinks some coefficients to zero, acting as built-in feature selection.</td>
+                                    <td class="text-teal-700">Identifies the most important predictors in Setup A (like failures, study time, absences); simplifies the model.</td>
+                                    <td class="text-rose-700">Can behave unstably with correlated features; collapses to only academic predictors in Setup C.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">ElasticNet (L1 + L2)</td>
+                                    <td>Combines Ridge & Lasso effects, providing both shrinkage and feature selection.</td>
+                                    <td class="text-teal-700">More robust than Lasso alone; handles correlated behavioral variables better; good in Setup A where signal is weak.</td>
+                                    <td class="text-rose-700">Still struggles to improve much once G1/G2 dominate; less interpretable than Ridge or LR.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Decision Tree (DT)</td>
+                                    <td>Splits data into branches based on rules like “failures ≥ 1” or “studytime > 2”.</td>
+                                    <td class="text-teal-700">Captures threshold behaviors seen in student data; easy to interpret; discovers meaningful split rules.</td>
+                                    <td class="text-rose-700">Overfits easily; unstable predictions across folds; weak performance without ensembles.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Random Forest (RF)</td>
+                                    <td>Averages predictions from hundreds of trees trained on bootstrapped samples.</td>
+                                    <td class="text-teal-700">One of the most accurate models; captures complex interactions (e.g., absences × studytime); robust to noise and irrelevant features; works well across all setups.</td>
+                                    <td class="text-rose-700">Hard to interpret; computationally heavy due to many trees + repeated CV.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Support Vector Regression (SVR)</td>
+                                    <td>Learns smooth nonlinear curves from the data, especially useful for subtle behavioral effects.</td>
+                                    <td class="text-teal-700">Models nuanced patterns like curved studytime effects; strong refinement when G1/G2 are present.</td>
+                                    <td class="text-rose-700">Very sensitive to scaling; performs poorly in Setup A; slow during cross-validation.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">KNN Regressor</td>
+                                    <td>Predicts grades based on similarity to “neighboring” students.</td>
+                                    <td class="text-teal-700">Simple; works well when strong predictors create natural clusters.</td>
+                                    <td class="text-rose-700">Fails in high-dimensional spaces created by many dummy variables; poor performance in Setup A.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Neural Network (MLP)</td>
+                                    <td>Uses layers of neurons to learn interactions between variables.</td>
+                                    <td class="text-teal-700">Learns nonlinear relationships; strong performance in Setup C where it can refine strong G1/G2 signals.</td>
+                                    <td class="text-rose-700">Requires more data than available; prone to overfitting; sensitive to initialization and scaling.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Polynomial Regression (Degree 2)</td>
+                                    <td>Adds squared and interaction terms to model smoother curves.</td>
+                                    <td class="text-teal-700">Can model curved effects (e.g., diminishing returns of studytime); helpful when interactions matter.</td>
+                                    <td class="text-rose-700">Feature explosion leads to overfitting; becomes computationally heavy with one-hot encoded data.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">Stepwise Regression (Forward Selection)</td>
+                                    <td>Selects only the strongest predictors by adding features step-by-step.</td>
+                                    <td class="text-teal-700">Produces a compact model; good for identifying top predictors in Setup A.</td>
+                                    <td class="text-rose-700">Greedy method that may miss optimal combinations; still limited to simple relationships.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">PCA + LR</td>
+                                    <td>Reduces feature space using PCA before fitting LR.</td>
+                                    <td class="text-teal-700">Helps stabilize models in Setup A by compressing noisy dummy variables; reduces multicollinearity.</td>
+                                    <td class="text-rose-700">Removes interpretability; may capture irrelevant variance; not useful when prior grades dominate.</td>
+                                </tr>
+                                <tr>
+                                    <td class="font-bold">PCA + Ridge</td>
+                                    <td>Applies PCA, then fits Ridge Regression on the compressed features.</td>
+                                    <td class="text-teal-700">More stable than PCA-LR; helpful when many weak predictors exist.</td>
+                                    <td class="text-rose-700">Adds complexity without major performance gains; unnecessary in Setup C.</td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
+            </section>
 
-                <div class="space-y-8">
-                    <!-- Setup Comparison -->
-                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6">
-                        <h3 class="text-lg font-bold text-slate-800 mb-2">Impact of Academic History (MAE)</h3>
-                        <p class="text-xs text-stone-500 mb-4">Comparison of error rates across setups. Lower is better.</p>
-                        
-                        <!-- Canvas -->
-                        <div id="setup-chart-view" class="chart-container h-64">
-                            <canvas id="setupResultsChart"></canvas>
-                        </div>
-                        
-                        <!-- Table (Hidden by default) -->
-                        <div id="setup-table-view" class="hidden overflow-x-auto">
-                            <table class="academic-table">
-                                <thead>
-                                    <tr>
-                                        <th>Setup Configuration</th>
-                                        <th>Features Included</th>
-                                        <th>Mean Absolute Error (MAE)</th>
-                                        <th>Interpretation</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><strong>Setup A</strong></td>
-                                        <td>Demographics Only</td>
-                                        <td>3.52</td>
-                                        <td>Poor predictive power.</td>
-                                    </tr>
-                                    <tr>
-                                        <td><strong>Setup B</strong></td>
-                                        <td>Demographics + G1</td>
-                                        <td>1.85</td>
-                                        <td>Significant improvement.</td>
-                                    </tr>
-                                    <tr class="bg-teal-50">
-                                        <td><strong>Setup C</strong></td>
-                                        <td>Demographics + G1 + G2</td>
-                                        <td>0.78</td>
-                                        <td><strong>Best Performance.</strong></td>
-                                    </tr>
-                                </tbody>
-                            </table>
+            <!-- 8. RESULTS -->
+            <section id="results" class="fade-in hidden">
+                <div class="border-l-4 border-slate-600 pl-4 mb-6">
+                    <h2 class="text-3xl font-bold text-slate-800">8. Results & Analysis</h2>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 mb-6">
+                    <div class="flex flex-col md:flex-row justify-between items-center mb-6">
+                        <h3 class="text-lg font-bold text-slate-800">Performance Overview</h3>
+                        <div class="flex gap-4 mt-4 md:mt-0">
+                            <!-- Dataset Toggle -->
+                            <div class="inline-flex rounded-md shadow-sm" role="group">
+                                <button onclick="toggleDatasetView('math')" id="btn-math" class="px-4 py-2 text-sm font-medium text-white bg-indigo-700 rounded-l-lg hover:bg-indigo-800 border border-indigo-700 transition-colors">Mathematics</button>
+                                <button onclick="toggleDatasetView('port')" id="btn-port" class="px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-r-lg hover:bg-stone-50 transition-colors">Portuguese</button>
+                            </div>
                         </div>
                     </div>
 
-                    <!-- Model Leaderboard -->
-                    <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6">
-                        <h3 class="text-lg font-bold text-slate-800 mb-2">Model Performance Leaderboard (Setup C)</h3>
-                        
-                        <div id="model-chart-view" class="chart-container h-80">
+                    <!-- Row 1: Setup Comparison Chart -->
+                    <div class="mb-8">
+                        <h4 class="text-sm font-bold text-slate-600 uppercase mb-3">Model Performance by Setup (Case A, B, C)</h4>
+                        <div class="chart-container h-80">
+                            <canvas id="setupResultsChart"></canvas>
+                        </div>
+                        <div class="mt-4 p-4 bg-indigo-50 border border-indigo-100 rounded text-sm text-indigo-800">
+                            <strong>Setup Key:</strong> 
+                            <span class="inline-block mx-2"><span class="w-2 h-2 inline-block bg-red-400 rounded-full"></span> Case A (No Grades)</span>
+                            <span class="inline-block mx-2"><span class="w-2 h-2 inline-block bg-orange-400 rounded-full"></span> Case B (G1 Only)</span>
+                            <span class="inline-block mx-2"><span class="w-2 h-2 inline-block bg-teal-500 rounded-full"></span> Case C (G1 + G2)</span>
+                        </div>
+                    </div>
+
+                    <!-- Row 2: Setup C Leaderboard -->
+                    <div>
+                        <h4 class="text-sm font-bold text-slate-600 uppercase mb-3">Leaderboard: Best Models for Case C</h4>
+                        <div class="chart-container h-80">
                             <canvas id="modelResultsChart"></canvas>
-                        </div>
-
-                        <div id="model-table-view" class="hidden overflow-x-auto">
-                            <table class="academic-table">
-                                <thead>
-                                    <tr>
-                                        <th>Rank</th>
-                                        <th>Model Algorithm</th>
-                                        <th>MAE (Setup C)</th>
-                                        <th>Stability</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td class="font-bold text-teal-700">Random Forest</td>
-                                        <td>0.75</td>
-                                        <td>Very High</td>
-                                    </tr>
-                                    <tr>
-                                        <td>2</td>
-                                        <td>Ridge Regression</td>
-                                        <td>0.78</td>
-                                        <td>High</td>
-                                    </tr>
-                                    <tr>
-                                        <td>3</td>
-                                        <td>ElasticNet</td>
-                                        <td>0.79</td>
-                                        <td>High</td>
-                                    </tr>
-                                    <tr>
-                                        <td>4</td>
-                                        <td>Neural Network (MLP)</td>
-                                        <td>0.85</td>
-                                        <td>Moderate</td>
-                                    </tr>
-                                    <tr>
-                                        <td>5</td>
-                                        <td>SVR</td>
-                                        <td>0.88</td>
-                                        <td>Moderate</td>
-                                    </tr>
-                                    <tr>
-                                        <td>6</td>
-                                        <td>Decision Tree</td>
-                                        <td>1.10</td>
-                                        <td>Low</td>
-                                    </tr>
-                                    <tr>
-                                        <td>7</td>
-                                        <td>KNN</td>
-                                        <td>1.45</td>
-                                        <td>Low</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-
-                        <div class="mt-4 p-4 bg-slate-50 border border-slate-100 rounded text-sm text-stone-600">
-                            <strong>Result Interpretation:</strong> Random Forests and Ridge Regression consistently achieved the lowest error. Complex models like Neural Networks performed well but showed higher variance. KNN struggled due to the dimensionality of the dataset.
                         </div>
                     </div>
                 </div>
             </section>
 
-            <!-- 8. CONCLUSIONS -->
+            <!-- 9. CONCLUSIONS -->
             <section id="conclusions" class="fade-in hidden">
                 <div class="border-l-4 border-slate-600 pl-4 mb-6">
-                    <h2 class="text-3xl font-bold text-slate-800">8. Conclusion & Future Work</h2>
+                    <h2 class="text-3xl font-bold text-slate-800">9. Conclusion & Future Work</h2>
                 </div>
 
                 <div class="bg-white rounded-xl shadow-sm border border-stone-200 p-6 space-y-6">
@@ -611,28 +591,32 @@
 
                     <div>
                         <h3 class="text-lg font-bold text-slate-700 mb-2">Directions for Future Analysis</h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div class="bg-stone-50 p-3 rounded border border-stone-200">
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                            <div class="bg-stone-50 p-4 rounded border border-stone-200">
                                 <span class="font-bold text-xs uppercase text-slate-500">Feature Engineering</span>
-                                <p class="text-sm mt-1">Investigate interactions (e.g., <em>Alcohol × Study Time</em>) to uncover hidden risk profiles.</p>
+                                <p class="text-sm mt-1">Collecting additional years of student records or integrating richer behavioral data (attendance, digital engagement) would improve model generalizability.</p>
                             </div>
-                            <div class="bg-stone-50 p-3 rounded border border-stone-200">
-                                <span class="font-bold text-xs uppercase text-slate-500">Classification</span>
-                                <p class="text-sm mt-1">Convert regression to a classification task (Pass/Fail) for actionable administrative alerts.</p>
+                            <div class="bg-stone-50 p-4 rounded border border-stone-200">
+                                <span class="font-bold text-xs uppercase text-slate-500">Advanced Algorithms</span>
+                                <p class="text-sm mt-1">Exploring gradient boosting methods (XGBoost or LightGBM) may offer stronger performance in setups where linear models currently dominate.</p>
                             </div>
-                            <div class="bg-stone-50 p-3 rounded border border-stone-200">
-                                <span class="font-bold text-xs uppercase text-slate-500">Temporal Modelling</span>
-                                <p class="text-sm mt-1">Use RNNs/LSTMs to model the grade progression sequence (G1→G2→G3) explicitly.</p>
+                            <div class="bg-stone-50 p-4 rounded border border-stone-200">
+                                <span class="font-bold text-xs uppercase text-slate-500">Causal Analysis</span>
+                                <p class="text-sm mt-1">Incorporate causal analysis to better understand which factors truly influence student achievement rather than merely correlate with it.</p>
+                            </div>
+                            <div class="bg-stone-50 p-4 rounded border border-stone-200">
+                                <span class="font-bold text-xs uppercase text-slate-500">Fairness & Bias</span>
+                                <p class="text-sm mt-1">Adding fairness and bias assessments ensures demographic variables are used responsibly, supporting equitable decision-making.</p>
                             </div>
                         </div>
                     </div>
                 </div>
             </section>
             
-            <!-- 9. SIMULATION -->
+            <!-- 10. SIMULATION -->
             <section id="simulation" class="fade-in hidden">
                 <div class="border-l-4 border-teal-600 pl-4 mb-6">
-                    <h2 class="text-3xl font-bold text-slate-800">9. Grade Simulator</h2>
+                    <h2 class="text-3xl font-bold text-slate-800">10. Grade Simulator</h2>
                 </div>
                 
                 <div class="bg-white rounded-xl shadow-lg border border-stone-200 p-6">
@@ -710,10 +694,10 @@
                 </div>
             </section>
 
-             <!-- 10. APPENDIX -->
+             <!-- 11. APPENDIX -->
              <section id="appendix" class="fade-in hidden">
                 <div class="border-l-4 border-slate-600 pl-4 mb-6">
-                    <h2 class="text-3xl font-bold text-slate-800">10. Code Appendix</h2>
+                    <h2 class="text-3xl font-bold text-slate-800">11. Code Appendix</h2>
                 </div>
                 <div class="bg-slate-800 text-white p-6 rounded-xl shadow-md">
                     <div class="flex items-center gap-4">
@@ -804,6 +788,34 @@
                     analysis: "<strong>Analysis:</strong> KNN generally underperforms compared to the linear models (e.g., 2.86 vs 1.94 in Setup B). The 'curse of dimensionality' likely affects it in Setup A/C where the feature space is larger, and it fails to capture the strong linear signal of past grades as effectively.",
                     pros: "Non-parametric; captures local clusters/non-linear patterns.",
                     cons: "Sensitive to feature scaling; slow prediction time; struggles in high dimensions."
+                },
+                dt: { 
+                    math: [4.0254, 2.0829, 4.0254], 
+                    port: [2.7709, 1.6485, 2.7709],
+                    analysis: "<strong>Analysis:</strong> Decision Trees show high instability, with error rates spiking in Setup A and C (e.g., 4.03 for Math) compared to Setup B (2.08). This drastic difference highlights their tendency to overfit when presented with many noisy demographic features, whereas they latch onto the strong signal of G1 in Setup B effectively.",
+                    pros: "Interpretable (if small); handles non-linearities.",
+                    cons: "Prone to overfitting; high variance."
+                },
+                rf: { 
+                    math: [2.9397, 1.6789, 2.9397], 
+                    port: [1.9925, 1.2403, 1.9925],
+                    analysis: "<strong>Analysis:</strong> Random Forests dramatically improve upon single Decision Trees (Math A error drops from 4.03 to 2.94). By averaging many trees, they dampen the overfitting observed in the single tree model. It is a top-tier performer, especially in Portuguese Setup B (1.24).",
+                    pros: "Robust; handles high dimensionality; reduced variance.",
+                    cons: "Less interpretable than single trees; computationally more intensive."
+                },
+                nn: { 
+                    math: [3.3567, 2.0755, 3.3567], 
+                    port: [1.9979, 1.2278, 1.9979],
+                    analysis: "<strong>Analysis:</strong> The Neural Network performance (Math A: 3.36) closely mimics the Linear Regression baseline. Given the relatively small dataset size (~400-600 samples), the MLP likely converged to a near-linear solution, failing to find deeper non-linear advantages over simpler models.",
+                    pros: "Can model complex non-linear relationships; flexible architecture.",
+                    cons: "Data-hungry; requires extensive tuning; 'black box'."
+                },
+                svm: { 
+                    math: [3.2179, 2.2685, 3.2179], 
+                    port: [1.9549, 1.2813, 1.9549],
+                    analysis: "<strong>Analysis:</strong> SVR performance is mixed. While decent in Setup A, it underperforms simple linear models in the highly correlated Setup B (2.27 vs ~1.95 for Lasso). This suggests that mapping the strong linear grade-to-grade relationship into a higher-dimensional kernel space may introduce unnecessary complexity.",
+                    pros: "Effective in high-dimensional spaces; robust to outliers.",
+                    cons: "Hard to tune (gamma/C); sensitive to feature scaling; slow on large data."
                 }
             }
         };
@@ -835,7 +847,11 @@
             // Trigger Charts if needed
             if(id === 'dataprep') renderQualityChart();
             if(id === 'dataviz') renderVizCharts();
-            if(id === 'results') renderResultCharts();
+            if(id === 'results') {
+                // Initialize charts for results section
+                // We default to 'math' if no chart exists
+                if(!charts.setup) toggleDatasetView('math');
+            }
             if(id === 'deepdive') renderDeepDiveChart('naive'); // Default load
             if(id === 'simulation') runSimulation();
         }
@@ -862,15 +878,16 @@
             // Scroll to Top
             document.getElementById('main-scroll').scrollTo(0,0);
 
-            // Trigger Charts (since they are now visible)
+            // Trigger Charts
             renderQualityChart();
             renderVizCharts();
-            renderResultCharts();
+            // Initialize result charts
+            toggleDatasetView('math');
             renderDeepDiveChart('naive');
             runSimulation();
         }
 
-        // --- RESULTS VIEW TOGGLE ---
+        // --- RESULTS VIEW TOGGLE (Chart vs Table) ---
         function toggleResults(view) {
             const chartBtn = document.getElementById('btn-chart');
             const tableBtn = document.getElementById('btn-table');
@@ -900,6 +917,105 @@
                 document.getElementById('model-chart-view').classList.add('hidden');
                 document.getElementById('model-table-view').classList.remove('hidden');
             }
+        }
+
+        // --- NEW: Toggle Dataset Logic for Results (Math vs Port) ---
+        let currentDataset = 'math';
+
+        function toggleDatasetView(ds) {
+            currentDataset = ds;
+            const stats = reportData.detailedModelStats;
+            
+            // 1. Update Buttons
+            const btnMath = document.getElementById('btn-math');
+            const btnPort = document.getElementById('btn-port');
+            
+            if(ds === 'math') {
+                btnMath.className = "px-4 py-2 text-sm font-medium text-white bg-indigo-700 rounded-l-lg hover:bg-indigo-800 border border-indigo-700 transition-colors";
+                btnPort.className = "px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-r-lg hover:bg-stone-50 transition-colors";
+            } else {
+                btnPort.className = "px-4 py-2 text-sm font-medium text-white bg-orange-500 rounded-r-lg hover:bg-orange-600 border border-orange-500 transition-colors";
+                btnMath.className = "px-4 py-2 text-sm font-medium text-slate-700 bg-white border border-slate-300 rounded-l-lg hover:bg-stone-50 transition-colors";
+            }
+
+            // Ensure elements exist before trying to get context
+            const setupCanvas = document.getElementById('setupResultsChart');
+            const modelCanvas = document.getElementById('modelResultsChart');
+
+            if (!setupCanvas || !modelCanvas) {
+                console.warn("Charts not found in DOM yet.");
+                return;
+            }
+
+            // 2. Update Setup Comparison Chart (Grouped Bar: Setup A, B, C for key models)
+            const ctxSetup = setupCanvas.getContext('2d');
+            if(charts.setup) charts.setup.destroy();
+
+            // Select key models for comparison to avoid clutter
+            const compareModels = ['Naive', 'Ridge', 'Random Forest', 'KNN'];
+            const modelKeys = ['naive', 'ridge', 'rf', 'knn'];
+            const colors = ['#94a3b8', '#3b82f6', '#0f766e', '#f43f5e']; // Slate, Blue, Teal, Rose
+
+            const datasets = compareModels.map((name, i) => {
+                const key = modelKeys[i];
+                const rawData = ds === 'math' ? stats[key].math : stats[key].port;
+                return {
+                    label: name,
+                    data: rawData, // [Setup A, Setup B, Setup C]
+                    backgroundColor: colors[i],
+                    borderRadius: 4
+                };
+            });
+
+            charts.setup = new Chart(ctxSetup, {
+                type: 'bar',
+                data: {
+                    labels: ['Case A (No Grades)', 'Case B (G1 Only)', 'Case C (G1 + G2)'],
+                    datasets: datasets
+                },
+                options: {
+                    ...commonOptions,
+                    plugins: { legend: { display: true, position: 'bottom' } },
+                    scales: { 
+                        y: { 
+                            beginAtZero: true,
+                            title: { display: true, text: 'Mean Absolute Error (Lower is Better)' },
+                            grid: { color: '#f5f5f4' }
+                        }
+                    }
+                }
+            });
+
+            // 3. Update Leaderboard Chart (Setup C Only)
+            const ctxLeader = modelCanvas.getContext('2d');
+            if(charts.model) charts.model.destroy();
+
+            // Get all models for leaderboard
+            const allModels = Object.keys(stats); // naive, linear, ...
+            const leaderboardData = allModels.map(key => {
+                return {
+                    name: key.toUpperCase(),
+                    val: ds === 'math' ? stats[key].math[2] : stats[key].port[2] // Index 2 is Setup C
+                };
+            }).sort((a, b) => a.val - b.val); // Sort best to worst (lowest MAE first)
+
+            charts.model = new Chart(ctxLeader, {
+                type: 'bar',
+                indexAxis: 'y',
+                data: {
+                    labels: leaderboardData.map(d => d.name),
+                    datasets: [{
+                        label: `MAE (Setup C - ${ds === 'math' ? 'Math' : 'Portuguese'})`,
+                        data: leaderboardData.map(d => d.val),
+                        backgroundColor: (c) => c.dataIndex < 3 ? '#0f766e' : '#cbd5e1', // Highlight top 3
+                        borderRadius: 4
+                    }]
+                },
+                options: {
+                    ...commonOptions,
+                    scales: { x: { title: {display:true, text:'MAE (Lower is Better)'} } }
+                }
+            });
         }
         
         // --- SIMULATION LOGIC ---
@@ -1162,44 +1278,7 @@
         }
 
         function renderResultCharts() {
-            if(charts.setup) return;
-
-            // Setup Comparison
-            const ctx3 = document.getElementById('setupResultsChart').getContext('2d');
-            charts.setup = new Chart(ctx3, {
-                type: 'bar',
-                data: {
-                    labels: ['Setup A (No Grades)', 'Setup B (G1)', 'Setup C (Full)'],
-                    datasets: [{
-                        data: reportData.setupMAE,
-                        backgroundColor: ['#fda4af', '#fdba74', '#5eead4'],
-                        borderRadius: 6
-                    }]
-                },
-                options: { 
-                    ...commonOptions, 
-                    scales: { y: { title: {display:true, text:'MAE (Lower is Better)'} } }
-                }
-            });
-
-            // Model Leaderboard
-            const ctx4 = document.getElementById('modelResultsChart').getContext('2d');
-            charts.model = new Chart(ctx4, {
-                type: 'bar',
-                indexAxis: 'y',
-                data: {
-                    labels: ['Random Forest', 'Ridge', 'ElasticNet', 'Neural Net', 'SVR', 'Decision Tree', 'KNN'],
-                    datasets: [{
-                        data: reportData.modelMAE,
-                        backgroundColor: (c) => c.dataIndex < 3 ? '#0f766e' : '#cbd5e1',
-                        borderRadius: 4
-                    }]
-                },
-                options: { 
-                    ...commonOptions, 
-                    scales: { x: { title: {display:true, text:'MAE (Lower is Better)'} } }
-                }
-            });
+            // No-op if handled via toggleDatasetView, but good safety
         }
 
         // Init
